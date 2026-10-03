@@ -76,12 +76,6 @@ function App() {
   return (
     <div className="app-shell">
       <div className="night-sky" aria-hidden="true" />
-      <a className="skip-link" href={step === null ? '#page-title' : '#step-title'} onClick={event => {
-        event.preventDefault()
-        const target = document.getElementById(step === null ? 'page-title' : 'step-title')
-        target?.focus()
-        target?.scrollIntoView()
-      }}>Skip to content</a>
       <header className="topline">
         <a className="brand" href="#" aria-label="Project Acutis home"><span className="mark">A</span><span>Project Acutis</span></a>
         <span className="topline-label">An inquiry into reason</span>

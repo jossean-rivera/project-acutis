@@ -130,21 +130,6 @@ em {
   color:white;
 }
 
-.skip-link {
-  position:fixed;
-  top:8px;
-  left:8px;
-  z-index:10;
-  transform:translateY(-180%);
-  background:#c6d8f6;
-  color:#0b1424;
-  padding:12px;
-}
-
-.skip-link:focus {
-  transform:translateY(0);
-}
-
 .landing-hero {
   min-height:calc(100svh - 98px);
   position:relative;
