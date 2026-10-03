@@ -595,7 +595,7 @@ h1 {
   padding:0 24px 20px 0;
 }
 
-.is-open .detail-expansion {
+.detail.is-open > .detail-expansion {
   grid-template-rows:1fr;
   opacity:1;
   visibility:visible;
