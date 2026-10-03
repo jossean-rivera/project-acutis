@@ -40,6 +40,7 @@ function App() {
   const [step, setStep] = useState<number | null>(readStep)
   const [deeperOpen, setDeeperOpen] = useState<Record<number, boolean>>({})
   const [expanded, setExpanded] = useState<Record<string, boolean>>({})
+  const [orbitsPaused, setOrbitsPaused] = useState(false)
   const heading = useRef<HTMLHeadingElement>(null)
 
   useEffect(() => {
@@ -53,11 +54,18 @@ function App() {
       window.scrollTo({ top: 0, behavior: 'instant' })
       heading.current?.focus({ preventScroll: true })
     } else {
-      requestAnimationFrame(() => {
-        const destination = document.getElementById(window.location.hash === '#arguments' ? 'arguments' : 'page-title')
-        destination?.scrollIntoView()
+      const frame = requestAnimationFrame(() => {
+        const hash = window.location.hash
+        const destination = document.getElementById(hash === '#arguments' ? 'arguments' : 'page-title')
+        if (hash === '#arguments' || hash === '#page-title') {
+          destination?.scrollIntoView()
+        } else {
+          // Keep the full hero in view on ordinary loads and returns home.
+          window.scrollTo({ top: 0, behavior: 'instant' })
+        }
         destination?.focus({ preventScroll: true })
       })
+      return () => cancelAnimationFrame(frame)
     }
   }, [step])
 
@@ -83,7 +91,11 @@ function App() {
       {step === null ? (
         <main>
           <section className="landing-hero" aria-labelledby="page-title">
-            <div className="orbits" aria-hidden="true"><span /><span /><i /></div>
+            <div className={`orbits${orbitsPaused ? ' is-paused' : ''}`} aria-hidden="true">
+              <span className="orbit orbit-inner" />
+              <span className="orbit orbit-middle" />
+              <span className="orbit orbit-outer" />
+            </div>
             <div className="hero-copy">
               <p className="eyebrow">Philosophy, made explorable</p>
               <h1 id="page-title" tabIndex={-1}>Big questions.<br /><em>One idea at a time.</em></h1>
@@ -92,6 +104,7 @@ function App() {
               <a className="primary-button" href="#arguments" onClick={selectArguments}>Next: choose an argument <span aria-hidden="true">↓</span></a>
             </div>
             <span className="hero-caption">A little curiosity. A clearer view.</span>
+            <button className="orbit-toggle" onClick={() => setOrbitsPaused(paused => !paused)}>{orbitsPaused ? 'Resume orbits' : 'Pause orbits'}</button>
           </section>
 
           <section className="arguments-section" id="arguments" tabIndex={-1} aria-labelledby="arguments-title">
