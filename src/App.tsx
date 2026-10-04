@@ -1,4 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
+import { Aristotle } from './Aristotle'
+import './aristotle.css'
 
 type Detail = { title: string; text: string }
 const steps: { label: string; title: string; description: string; details: Detail[] }[] = [
@@ -37,6 +39,11 @@ function readStep() {
 }
 
 function App() {
+  const [hash, setHash] = useState(window.location.hash)
+  const scrollPositions = useRef<Record<string, number>>({})
+  const focusPositions = useRef<Record<string, { href: string; text: string }>>({})
+  const currentHash = useRef(window.location.hash)
+  const isAristotle = hash.startsWith('#aristotle')
   const [step, setStep] = useState<number | null>(readStep)
   const [deeperOpen, setDeeperOpen] = useState<Record<number, boolean>>({})
   const [expanded, setExpanded] = useState<Record<string, boolean>>({})
@@ -44,12 +51,27 @@ function App() {
   const heading = useRef<HTMLHeadingElement>(null)
 
   useEffect(() => {
-    const onHashChange = () => setStep(readStep())
+    const previousRestoration = window.history.scrollRestoration
+    window.history.scrollRestoration = 'manual'
+    const onHashChange = () => {
+      scrollPositions.current[currentHash.current] = window.scrollY
+      const active = document.activeElement
+      if (active instanceof HTMLAnchorElement && active.closest('.aristotle-explorer')) {
+        focusPositions.current[currentHash.current] = { href: active.getAttribute('href') ?? '', text: active.textContent ?? '' }
+      }
+      currentHash.current = window.location.hash
+      setHash(window.location.hash)
+      setStep(readStep())
+    }
     window.addEventListener('hashchange', onHashChange)
-    return () => window.removeEventListener('hashchange', onHashChange)
+    return () => {
+      window.removeEventListener('hashchange', onHashChange)
+      window.history.scrollRestoration = previousRestoration
+    }
   }, [])
 
   useEffect(() => {
+    if (isAristotle) return
     if (step !== null) {
       window.scrollTo({ top: 0, behavior: 'instant' })
       heading.current?.focus({ preventScroll: true })
@@ -67,7 +89,7 @@ function App() {
       })
       return () => cancelAnimationFrame(frame)
     }
-  }, [step])
+  }, [step, hash, isAristotle])
 
   function selectArguments() {
     document.getElementById('arguments')?.focus({ preventScroll: true })
@@ -79,10 +101,10 @@ function App() {
       <header className="topline">
         <a className="brand" href="#" aria-label="Project Acutis home"><span className="mark">A</span><span>Project Acutis</span></a>
         <span className="topline-label">An inquiry into reason</span>
-        {step !== null && <a className="back-link" href="#arguments">← All arguments</a>}
+        {(step !== null || isAristotle) && <a className="back-link" href="#arguments">← All arguments</a>}
       </header>
 
-      {step === null ? (
+      {isAristotle ? <Aristotle hash={hash} scrollPositions={scrollPositions.current} focusPositions={focusPositions.current} /> : step === null ? (
         <main>
           <section className="landing-hero" aria-labelledby="page-title">
             <div className={`orbits${orbitsPaused ? ' is-paused' : ''}`} aria-hidden="true">
@@ -102,7 +124,7 @@ function App() {
           </section>
 
           <section className="arguments-section" id="arguments" tabIndex={-1} aria-labelledby="arguments-title">
-            <div className="section-heading"><p className="eyebrow">Choose a starting point</p><h2 id="arguments-title">Every inquiry begins<br />with <em>a first step.</em></h2><p>Start with a short demonstration. More paths into the big questions are on the horizon.</p></div>
+            <div className="section-heading"><p className="eyebrow">Choose a starting point</p><h2 id="arguments-title">Every inquiry begins<br />with <em>a first step.</em></h2><p>Try a short demonstration, or explore the first premise of an argument from change.</p></div>
             <div className="argument-grid">
               <a className="argument-card available" href="#socrates/1">
                 <div className="card-top"><span className="card-number">01</span><span className="badge">Interactive demo</span></div>
@@ -110,11 +132,11 @@ function App() {
                 <h3>The Socrates case</h3><p>A person, a universal claim, and a conclusion. Discover how a simple argument fits together.</p>
                 <div className="card-bottom"><span>3 steps · At your own pace</span><span className="card-cta">Explore <span aria-hidden="true">↗</span></span></div>
               </a>
-              <article className="argument-card unavailable" aria-labelledby="aristotle-title">
-                <div className="card-top"><span className="card-number">02</span><span className="badge muted">Coming soon</span></div>
+              <a className="argument-card available" href="#aristotle/1" aria-labelledby="aristotle-title">
+                <div className="card-top"><span className="card-number">02</span><span className="badge in-progress">In progress · Premise 1 open</span></div>
                 <div className="card-symbol" aria-hidden="true">◎</div><h3 id="aristotle-title">The Aristotelian proof</h3><p>An inquiry beginning with change, and the question of what makes change possible.</p>
-                <button className="disabled-option" disabled>Not yet available <span aria-hidden="true">↗</span></button>
-              </article>
+                <div className="card-bottom"><span>Change is real · Interactive exploration</span><span className="card-cta">Begin <span aria-hidden="true">↗</span></span></div>
+              </a>
               <article className="argument-card unavailable" aria-labelledby="thomas-title">
                 <div className="card-top"><span className="card-number">03</span><span className="badge muted">Coming soon</span></div>
                 <div className="card-symbol" aria-hidden="true">✧</div><h3 id="thomas-title">Saint Thomas Aquinas’ proof</h3><p>An inquiry into essence and existence: what a thing is, and that it is.</p>
