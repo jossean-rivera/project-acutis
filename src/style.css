@@ -80,8 +80,29 @@ em {
   z-index:-1;
   pointer-events:none;
   background-color:#040711;
-  background-image:radial-gradient(circle at 17% 24%,#b1c9f6a6 0 1px,transparent 1.5px),radial-gradient(circle at 76% 18%,#b1c9f680 0 1px,transparent 1.5px),radial-gradient(circle at 61% 73%,#b1c9f659 0 1px,transparent 1.5px),radial-gradient(circle at 88% 66%,#b1c9f680 0 1px,transparent 1.5px),radial-gradient(circle at 31% 83%,#b1c9f659 0 1px,transparent 1.5px),radial-gradient(ellipse at 50% 42%,#192b584d,transparent 65%);
-  background-size:260px 230px,310px 270px,390px 340px,280px 250px,420px 360px,auto;
+  overflow:hidden;
+}
+
+.night-sky::before,
+.night-sky::after {
+  content:'';
+  position:absolute;
+  inset:-24px;
+  pointer-events:none;
+  background-repeat:no-repeat;
+  will-change:transform;
+}
+
+.night-sky::before {
+  background-image:radial-gradient(circle at 17% 24%,#b1c9f6a6 0 1px,transparent 1.5px),radial-gradient(circle at 76% 18%,#b1c9f680 0 1px,transparent 1.5px),radial-gradient(circle at 61% 73%,#b1c9f659 0 1px,transparent 1.5px);
+  background-size:260px 230px,310px 270px,390px 340px;
+  animation:stars-drift 36s ease-in-out infinite alternate;
+}
+
+.night-sky::after {
+  background-image:radial-gradient(circle at 88% 66%,#b1c9f680 0 1px,transparent 1.5px),radial-gradient(circle at 31% 83%,#b1c9f659 0 1px,transparent 1.5px),radial-gradient(ellipse at 50% 42%,#192b584d,transparent 65%);
+  background-size:280px 250px,420px 360px,auto;
+  animation:stars-drift 48s ease-in-out infinite alternate-reverse;
 }
 
 .topline {
@@ -290,6 +311,15 @@ h1 {
 @keyframes orbit-revolve {
   to {
     transform:rotate(calc(var(--orbit-start) + 360deg));
+  }
+}
+
+@keyframes stars-drift {
+  from {
+    transform:translate3d(-12px,8px,0);
+  }
+  to {
+    transform:translate3d(16px,-14px,0);
   }
 }
 
