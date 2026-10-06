@@ -79,8 +79,8 @@ em {
   inset:0;
   z-index:-1;
   pointer-events:none;
-  background-color:#040711;
   overflow:hidden;
+  background-color:#040711;
 }
 
 .night-sky::before,
