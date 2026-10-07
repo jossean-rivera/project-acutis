@@ -85,7 +85,8 @@ function DenialContent() {
     <ol className="reasoning-sequence"><li><span>Suppose</span><h4>Uncertainty</h4><p>Suppose someone is initially uncertain whether change is real.</p></li><li><span>Then</span><h4>Certainty</h4><p>Through whatever reasoning they choose, such as conducting some scientific research, they eventually become certain that change is not real.</p></li><li><span>Notice</span><h4>A real transition</h4><p>But their mental state has changed from uncertainty to certainty. Their conclusion was reached through a real transition in thought.</p></li></ol>
     <div className="reading-prose"><p>Therefore, the denial of change depends upon the very reality it attempts to reject.</p></div>
     <div className="thought-question"><h4>Can we acknowledge a transition from uncertainty to certainty and deny change at the same time?</h4><button className="secondary-button" aria-expanded={revealed} aria-controls="denial-reply" onClick={() => setRevealed(value => !value)}>{revealed ? 'Hide the explanation −' : 'Show the explanation +'}</button><div id="denial-reply" className="reason-reveal" hidden={!revealed}><p>Someone cannot coherently move from uncertainty to certainty while denying that any change has occurred.</p></div></div>
-    <p className="argument-takeaway">This establishes that someone cannot coherently move from uncertainty to certainty while denying that any change has occurred. <strong>Therefore, change must be real.</strong></p>
+    <p className="argument-takeaway">This establishes that someone cannot coherently move from uncertainty to certainty while denying that any change has occurred.</p>
+    <p className="argument-conclusion">Therefore, change must be real.</p>
   </>
 }
 
@@ -200,23 +201,23 @@ export function Aristotle({ hash, scrollPositions, focusPositions }: { hash: str
           <p className="eyebrow">The Aristotelian proof · Premise one</p>
           <h1 id="aristotle-title" tabIndex={-1}>Change is <em>real.</em></h1>
           <p className="change-definition">Aristotle defined change as a potential becoming an actual.</p>
+          <div className="premise-hero-actions">
+            <button className="primary-button acceptance-button" onClick={() => accepted ? window.location.hash = '#aristotle/2' : setAcceptance(true)}>{accepted ? 'Continue' : 'I agree'} <span aria-hidden="true">{accepted ? '→' : '✓'}</span></button>
+            {accepted && <div className="acceptance-state"><span role="status">Agreed</span><button onClick={() => setAcceptance(false)} aria-label="Undo agreement with this premise">Undo</button></div>}
+            {acceptanceStorageFailed && <small role="status">Remembered for this visit; browser storage is unavailable.</small>}
+          </div>
         </div>
-        <button className="premise-scroll" onClick={explorePremise} aria-controls="premise-exploration"><span>Follow the argument</span><span aria-hidden="true">↓</span></button>
+        <button className="premise-scroll" onClick={explorePremise} aria-controls="premise-exploration"><span>Follow the dot to go deeper</span><span aria-hidden="true">↓</span></button>
       </div>
       <section className="premise-exploration" id="premise-exploration" ref={exploration} tabIndex={-1} aria-labelledby="exploration-title">
         <Definitions />
         <div className="premise-reasons">
-          <h2 id="premise-reasons" tabIndex={-1}>Why we know change is real</h2>
+          <h2 id="premise-reasons" tabIndex={-1}>How we know change is real</h2>
           {deepPoints.map((item, index) => <section className="argument-section" key={item.id} aria-labelledby={`premise-${item.id}`}>
             <h3 id={`premise-${item.id}`} tabIndex={-1}><span className="argument-number" aria-hidden="true">{item.number}</span><span><span className="sr-only">{index + 1}. </span>{item.title}</span></h3>
             {item.id === 'experience' ? <ExperienceContent /> : item.id === 'mind' ? <MindContent /> : <DenialContent />}
           </section>)}
         </div>
-      <div className="premise-hero-actions premise-completion">
-        <button className="primary-button acceptance-button" onClick={() => accepted ? window.location.hash = '#aristotle/2' : setAcceptance(true)}>{accepted ? 'Continue' : 'I accept'} <span aria-hidden="true">{accepted ? '→' : '✓'}</span></button>
-        {accepted && <div className="acceptance-state"><span role="status">Accepted</span><button onClick={() => setAcceptance(false)} aria-label="Undo acceptance of this premise">Undo</button></div>}
-        {acceptanceStorageFailed && <small role="status">Remembered for this visit; browser storage is unavailable.</small>}
-      </div>
       <div className="understanding"><div><button className={`understanding-button ${understood ? 'is-understood' : ''}`} aria-pressed={understood} onClick={markUnderstanding}><span aria-hidden="true">{understood ? '✓' : '○'}</span> {understood ? 'Marked as understood' : 'I understand this premise'}</button><p>{storageFailed ? 'Remembered for this visit; browser storage is unavailable.' : 'Saved in this browser. This records understanding, not agreement.'}</p></div><a className="text-link" href="#aristotle/2">See what comes next <span aria-hidden="true">→</span><small>Actualizer premise · In progress</small></a></div>
       <SourceNotes />
       <div className="premise-outline">{outline}</div>
