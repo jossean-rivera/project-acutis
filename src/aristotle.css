@@ -86,9 +86,6 @@
 .deeper-door-cta{margin-left:auto;white-space:nowrap;font-size:12px;color:#d0e1ff}
 .deeper-door-cta span{margin-left:12px}
 .understanding{display:flex;align-items:center;justify-content:space-between;gap:25px;padding:35px 0;border-bottom:1px solid #2b3a50}
-.understanding-button{border:1px solid #617999;background:#142239;border-radius:5px;color:#d2e0f4;padding:13px 16px;font-size:12px;min-height:46px;cursor:pointer}
-.understanding-button span{margin-right:7px}
-.understanding-button.is-understood{border-color:#92b9ac;background:#142e2d;color:#c2dfd5}
 .understanding p{font-size:10px;line-height:1.8;color:#98abc7;margin-top:11px}
 .understanding a small{display:block;color:#93a7c5;font-size:10px}
 .source-notes{padding:28px 0;margin-top:12px}
@@ -257,7 +254,7 @@
 .notes-premise .thought-question h4{font-size:clamp(1.5rem,3vw,1.875rem);margin:0 0 20px;max-width:650px}
 .notes-premise .thought-question .secondary-button{font-size:.875rem;min-height:44px;white-space:normal}
 .notes-premise .premise-completion{margin:0;padding:28px 0;border-top:1px solid #3a4b63;min-height:0}
-.notes-premise .understanding-button,.notes-premise .text-link,.notes-premise .source-notes a{font-size:.875rem}
+.notes-premise .text-link,.notes-premise .source-notes a{font-size:.875rem}
 .notes-premise .understanding p,.notes-premise .understanding a small,.notes-premise .source-notes small{font-size:.8125rem}
 .notes-premise .premise-outline .path-note,.notes-premise .premise-outline small,.notes-premise .outline-caption{font-size:.75rem}
 .notes-premise .premise-outline .aristotle-path a{font-size:.875rem}

@@ -4,12 +4,7 @@ import { actualizerNeeds, conclusionNeeds, deepPoints, premiseNotes, researchSou
 
 const root = '#aristotle/1'
 const deeper = `${root}/deeper`
-const storageKey = 'acutis.aristotle.understanding.v1'
 const knownRoutes = [root, deeper, `${deeper}/potential`, ...deepPoints.map(point => `${deeper}/${point.id}`), '#aristotle/2', '#aristotle/conclusion']
-
-function readUnderstanding(): boolean {
-  try { return localStorage.getItem(storageKey) === 'true' } catch { return false }
-}
 
 function SourceNotes({ compact = false }: { compact?: boolean }) {
   return <aside className={`source-notes ${compact ? 'compact' : ''}`} aria-label="References">
@@ -68,7 +63,7 @@ function MindContent() {
   return <>
     <div className="reading-prose"><p>Even if we doubt the external world and mainly our senses, the existence of the thinking mind remains undeniable in the Cartesian sense: if I am thinking, I exist as a thinker (or more commonly known as “I think, therefore I am”).</p><p>Within conscious experience, we encounter changing thoughts, judgments, and emotions.</p><p>We can recognize within our own minds that our emotions have changed—for example, that we have moved from happiness to sadness, from anxiety to calm, or from anger to peace.</p></div>
     <MindExplorer />
-    <div className="reading-prose"><p>We can also move from uncertainty to certainty, or from not understanding something to understanding it.</p><p>Our ability to recognize these emotional and intellectual transitions provides direct evidence that change is real.</p></div>
+    <div className="reading-prose"><p>Our ability to recognize these emotional and intellectual transitions provides direct evidence that change is real.</p></div>
     <p className="argument-takeaway">Therefore, we know change is real by our conscious experience, even if someone questions whether the external world is exactly as it appears (something like a Matrix objection).</p>
   </>
 }
@@ -136,8 +131,6 @@ function PendingPage({ conclusion }: { conclusion: boolean }) {
 }
 
 export function Aristotle({ hash, scrollPositions, focusPositions }: { hash: string; scrollPositions: Record<string, number>; focusPositions: Record<string, { href: string; text: string }> }) {
-  const [understood, setUnderstood] = useState(readUnderstanding)
-  const [storageFailed, setStorageFailed] = useState(false)
   const main = useRef<HTMLElement>(null)
   const exploration = useRef<HTMLElement>(null)
   const reducedMotion = useReducedMotion()
@@ -165,11 +158,6 @@ export function Aristotle({ hash, scrollPositions, focusPositions }: { hash: str
     return () => { cancelAnimationFrame(frame); document.title = 'Project Acutis' }
   }, [hash, legacySection, isPending, valid, scrollPositions, focusPositions])
 
-  function markUnderstanding() {
-    setUnderstood(value => !value)
-    try { localStorage.setItem(storageKey, String(!understood)); setStorageFailed(false) } catch { setStorageFailed(true) }
-  }
-
   function explorePremise() {
     exploration.current?.focus({ preventScroll: true })
     exploration.current?.scrollIntoView({ behavior: reducedMotion ? 'instant' : 'smooth', block: 'start' })
@@ -177,7 +165,7 @@ export function Aristotle({ hash, scrollPositions, focusPositions }: { hash: str
 
   const outline = <>
     <div className="path-banner"><a href={root}>The Aristotelian proof</a><span className="badge in-progress">In progress</span><span className="path-note">First premise open · Further reasoning under development</span></div>
-    <nav className="aristotle-path" aria-label="Argument outline, reading order only"><a href={root} aria-current={!isPending && valid ? 'step' : undefined}><span className="path-dot">1</span><span>Change is real<small>{understood ? 'Marked understood' : 'Explore the premise'}</small></span></a><span className="outline-gap" aria-hidden="true">···</span><a href="#aristotle/2" aria-current={hash === '#aristotle/2' ? 'step' : undefined}><span className="path-dot">2</span><span>An actualizer<small>In progress</small></span></a><span className="outline-gap" aria-hidden="true">···</span><a href="#aristotle/conclusion" aria-current={hash === '#aristotle/conclusion' ? 'step' : undefined}><span className="path-dot">?</span><span>Conclusion<small>Further premises needed</small></span></a></nav>
+    <nav className="aristotle-path" aria-label="Argument outline, reading order only"><a href={root} aria-current={!isPending && valid ? 'step' : undefined}><span className="path-dot">1</span><span>Change is real<small>Explore the premise</small></span></a><span className="outline-gap" aria-hidden="true">···</span><a href="#aristotle/2" aria-current={hash === '#aristotle/2' ? 'step' : undefined}><span className="path-dot">2</span><span>An actualizer<small>In progress</small></span></a><span className="outline-gap" aria-hidden="true">···</span><a href="#aristotle/conclusion" aria-current={hash === '#aristotle/conclusion' ? 'step' : undefined}><span className="path-dot">?</span><span>Conclusion<small>Further premises needed</small></span></a></nav>
     <p className="outline-caption">Reading outline · The missing steps are not a completed chain of inference.</p>
   </>
 
@@ -198,13 +186,13 @@ export function Aristotle({ hash, scrollPositions, focusPositions }: { hash: str
       <section className="premise-exploration" id="premise-exploration" ref={exploration} tabIndex={-1} aria-labelledby="exploration-title">
         <Definitions />
         <div className="premise-reasons">
-          <h2 id="premise-reasons" tabIndex={-1}>How we know change is real</h2>
+          <h2 id="premise-reasons" tabIndex={-1}>How do we know change is real?</h2>
           {deepPoints.map((item, index) => <section className="argument-section" key={item.id} aria-labelledby={`premise-${item.id}`}>
             <h3 id={`premise-${item.id}`} tabIndex={-1}><span className="argument-number" aria-hidden="true">{item.number}</span><span><span className="sr-only">{index + 1}. </span>{item.title}</span></h3>
             {item.id === 'experience' ? <ExperienceContent /> : item.id === 'mind' ? <MindContent /> : <DenialContent />}
           </section>)}
         </div>
-      <div className="understanding"><div><button className={`understanding-button ${understood ? 'is-understood' : ''}`} aria-pressed={understood} onClick={markUnderstanding}><span aria-hidden="true">{understood ? '✓' : '○'}</span> {understood ? 'Marked as understood' : 'I understand this premise'}</button><p>{storageFailed ? 'Remembered for this visit; browser storage is unavailable.' : 'Saved in this browser. This records understanding, not agreement.'}</p></div><a className="text-link" href="#aristotle/2">See what comes next <span aria-hidden="true">→</span><small>Actualizer premise · In progress</small></a></div>
+      <div className="understanding"><a className="text-link" href="#aristotle/2">See what comes next <span aria-hidden="true">→</span><small>Actualizer premise · In progress</small></a></div>
       <SourceNotes />
       <div className="premise-outline">{outline}</div>
       </section>
