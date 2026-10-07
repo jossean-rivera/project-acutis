@@ -208,3 +208,81 @@
 .thought-question h5{font-size:29px;font-weight:400;margin-bottom:13px}
 @media(max-width:600px){.premise-sections{margin-top:25px}.premise-disclosure>h3>button,.premise-disclosure>h4>button{padding:21px 0;gap:15px}.disclosure-content,.nested-disclosure .disclosure-content{padding:0 0 24px}.nested-disclosure>h4>button{font-size:24px}.section-introduction{font-size:13px}.disclosure-content .reading-prose h4,.disclosure-content .reading-prose h5,.reasoning-sequence h5,.thought-question h5{font-size:24px}}
 @media(max-width:600px){.premise-intro.premise-hero{min-height:calc(100svh - 80px);padding:50px 0 135px}.premise-hero h1{font-size:clamp(62px,13vw,78px)}.premise-hero .eyebrow{font-size:8px;letter-spacing:.12em}.premise-hero .change-definition{font-size:16px;max-width:290px;margin:23px auto 0}.premise-hero-actions{margin-top:30px}.premise-hero-actions small{font-size:9px}.premise-scroll{bottom:20px;font-size:11px}.premise-options{grid-template-columns:1fr;gap:14px;margin:25px 0 36px}.premise-option{padding:24px}.premise-option h3{font-size:27px}.premise-exploration{padding-top:34px}.premise-exploration>h2{font-size:35px}}
+
+/* Premise one follows the notes as a continuous, readable argument. */
+.notes-premise{overflow-wrap:anywhere}
+.notes-premise .premise-hero{min-height:0;padding:64px 0 116px}
+.notes-premise .premise-hero h1{font-size:clamp(3.5rem,8vw,6rem)}
+.notes-premise .premise-hero .change-definition{max-width:620px;margin:24px auto 0;font-size:1.125rem}
+.notes-premise .premise-hero .eyebrow{font-size:.875rem;letter-spacing:.12em}
+.notes-premise .premise-scroll{font-size:.875rem;bottom:16px}
+.notes-premise .premise-exploration{padding-top:40px}
+.notes-premise h2{font-size:clamp(1.875rem,4vw,2.5rem);line-height:1.2}
+.definition-cards{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:28px 0 0}
+.definition-cards>div{padding:28px;border:1px solid #594936;border-top:3px solid var(--warm);border-radius:8px;background:#221e1b70;scroll-margin-top:28px;min-width:0}
+.definition-cards>div+div{border-color:#354f67;border-top-color:var(--cool);background:#13233480}
+.definition-cards dt{font:2rem 'Newsreader',Georgia,serif;color:var(--warm);margin-bottom:16px}
+.definition-cards>div+div dt{color:var(--cool)}
+.definition-cards dd{margin:0}
+.definition-cards p,.notes-premise .reading-prose p,.notes-premise .section-introduction,.notes-premise .reason-note p,.notes-premise .reasoning-sequence p,.notes-premise .thought-question p{font-size:1rem;line-height:1.85;color:#c1cee1}
+.definition-cards p+p,.notes-premise .reading-prose p+p{margin-top:18px}
+.notes-premise strong{font-weight:600;color:#e4edf9}
+.definition-summary{padding:24px 28px;border-left:3px solid #94aecf;background:#19273b80;margin:20px 0 0;font-size:1.0625rem;line-height:1.85;color:#c8d5e8}
+.premise-reasons{margin-top:64px}
+.premise-reasons>h2{margin-bottom:36px;scroll-margin-top:24px}
+.argument-section{padding:36px 0 48px;border-top:1px solid #3a4b63}
+.argument-section>h3{display:flex;align-items:center;gap:18px;margin-bottom:28px;font-size:clamp(1.75rem,4vw,2.25rem);line-height:1.2;scroll-margin-top:28px}
+.argument-section>h3>span:last-child{min-width:0}
+.argument-number{display:grid;place-items:center;flex-shrink:0;width:44px;height:44px;border:1px solid #526b8e;border-radius:50%;font:1rem 'DM Sans',sans-serif;color:#b7cdee}
+.notes-premise .reading-prose,.notes-premise .argument-takeaway{max-width:760px}
+.argument-section .change-lab{margin:28px 0}
+.notes-premise h4{font-family:'Newsreader',Georgia,serif;font-weight:400;line-height:1.25}
+.notes-premise .lab-heading h4{font-size:1.875rem;margin:8px 0 0}
+.notes-premise .mini-label{font-size:.875rem;letter-spacing:.09em}
+.notes-premise .map-key{font-size:.875rem}
+.notes-premise .animation-controls{flex-wrap:wrap;gap:18px}
+.notes-premise .play-button{font-size:.875rem;min-height:44px}
+.notes-premise .time-slider{font-size:.875rem;min-width:180px}
+.notes-premise .lab-status{font-size:1rem;line-height:1.75}
+.notes-premise .potential-picker{grid-template-columns:repeat(3,minmax(0,1fr))}
+.notes-premise .potential-picker button{min-height:52px}
+.notes-premise .potential-picker button span{font-size:.875rem;line-height:1.5}
+.notes-premise .potential-note{font-size:1rem;line-height:1.75;padding-bottom:24px;min-height:0}
+.notes-premise .reason-note{margin-bottom:0}
+.notes-premise .reason-note h4{font-size:1.625rem;margin:0 0 14px}
+.argument-takeaway{margin-top:28px;padding-left:24px;border-left:3px solid var(--cool);font-size:1.0625rem;line-height:1.85;color:#d3dff0}
+.notes-premise .reasoning-sequence{margin-top:28px}
+.notes-premise .reasoning-sequence li>span{font-size:.875rem}
+.notes-premise .reasoning-sequence li::before{font-size:.875rem}
+.notes-premise .reasoning-sequence h4{font-size:1.75rem;margin:10px 0 12px}
+.notes-premise .thought-question{margin-top:28px}
+.notes-premise .thought-question h4{font-size:clamp(1.5rem,3vw,1.875rem);margin:0 0 20px;max-width:650px}
+.notes-premise .thought-question .secondary-button{font-size:.875rem;min-height:44px;white-space:normal}
+.notes-premise .premise-completion{margin:0;padding:28px 0;border-top:1px solid #3a4b63;min-height:0}
+.notes-premise .understanding-button,.notes-premise .text-link,.notes-premise .source-notes a{font-size:.875rem}
+.notes-premise .understanding p,.notes-premise .understanding a small,.notes-premise .source-notes small{font-size:.8125rem}
+.notes-premise .premise-outline .path-note,.notes-premise .premise-outline small,.notes-premise .outline-caption{font-size:.75rem}
+.notes-premise .premise-outline .aristotle-path a{font-size:.875rem}
+.notes-premise .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+@media(max-width:600px){
+  .notes-premise .premise-hero{min-height:0;padding:42px 0 112px}
+  .notes-premise .premise-hero .eyebrow{font-size:.75rem;line-height:1.8}
+  .notes-premise .premise-hero .change-definition{font-size:1rem;max-width:340px}
+  .definition-cards{grid-template-columns:1fr;gap:14px}
+  .definition-cards>div{padding:24px 20px}
+  .definition-summary{padding:20px}
+  .premise-reasons{margin-top:48px}
+  .argument-section{padding:28px 0 36px}
+  .argument-section>h3{gap:12px;align-items:flex-start}
+  .argument-number{width:36px;height:36px;font-size:.875rem}
+  .notes-premise .potential-picker{grid-template-columns:repeat(auto-fit,minmax(min(100%,7rem),1fr))}
+  .notes-premise .potential-picker button:last-child{grid-column:1/-1}
+  .notes-premise .animation-controls{flex-direction:column;align-items:stretch}
+  .notes-premise .time-slider{min-width:0}
+  .notes-premise .understanding>a{align-self:start;text-align:left}
+  .notes-premise .aristotle-path{display:grid;grid-template-columns:1fr;gap:16px}
+  .notes-premise .aristotle-path a{flex-direction:row;text-align:left;min-width:0}
+  .notes-premise .aristotle-path small{max-width:none}
+  .notes-premise .aristotle-path .path-dot{flex-shrink:0}
+  .notes-premise .aristotle-path .outline-gap{display:none}
+}

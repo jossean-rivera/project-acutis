@@ -1,5 +1,19 @@
 # Aristotelian path: content and completion plan
 
+## Current premise-one revision · October 7, 2026
+
+The first-premise presentation now follows the complete [Change is real note](https://www.notion.so/3ee1393f430a8062b361e1a3c59a4fd2), last edited October 7, 2026 at 00:37 UTC. This revision supersedes the older first-premise descriptions and editorial qualifications below; they remain as implementation history, not instructions for the current page.
+
+- Preserve the note's order and wording: introductory definition; potential and actuality; everyday experience and its sensory premise; inner experience and the Cartesian explanation; proof by contradiction and its conclusion.
+- Definitions use visible cards. The three numbered sections stay open in a continuous reading flow. The coffee and emotion animations appear within their respective examples, and the contradiction uses the existing three-step sequence plus a question with a revealable explanation. Acceptance follows the complete argument; understanding remains a separate control.
+- Remove the implementation's additional philosophical qualifications and skeptical objections. Primary-source links remain available for further reading. No Notion content was edited.
+- Coffee outcomes now match the note: boiled and evaporated, frozen, spoiled, consumed, and cooling to room temperature. The spilled-coffee example and added scientific explanations are removed.
+- Older deep links focus the corresponding visible section. Animation playback, keyboard sliders, reduced-motion support, and local acceptance/understanding persistence remain available.
+- Verification: production build and whitespace check passed. Browser checks passed for note coverage and section order, both keyboard sliders, coffee choices, explanation reveal, acceptance/understanding persistence, older deep links, reduced motion, the unchanged premise-two disclosure, 390px/320px layouts, and 200% text enlargement. No JavaScript runtime errors occurred during those checks.
+- The user requested no commits or pushes. The Sites publishing API requires a pushed source commit matching the built archive, so publishing needs resolution of that constraint; do not publish the changed archive against an older commit.
+
+## Previous implementation history
+
 Implemented October 4, 2026. The path remains **in progress**. Only “Change is real” has an explorable explanation. Understanding and acceptance are recorded separately. The app records acceptance only when the visitor explicitly selects “I accept”; it never infers agreement from a visit, animation, or understanding control.
 
 ## First-premise presentation

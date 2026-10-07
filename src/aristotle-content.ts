@@ -7,8 +7,8 @@ export const sources = {
 
 export const deepPoints = [
   { id: 'experience', number: '01', title: 'Everyday experience', subtitle: 'A cup of coffee does not stay hot.', kind: 'Observation', summary: 'Begin with a familiar thing becoming different, and examine the trust we place in perception.' },
-  { id: 'mind', number: '02', title: 'Our inner experience', subtitle: 'Anger gives way to peace.', kind: 'Reflection', summary: 'Consider changes in thought and emotion, even while questioning the world outside the mind.' },
-  { id: 'denial', number: '03', title: 'Can we deny change?', subtitle: 'What happens when we reach a conclusion?', kind: 'Reasoning', summary: 'Test the tension between a transition in thought and the claim that nothing ever changes.' },
+  { id: 'mind', number: '02', title: 'Inner experience and the mind', subtitle: 'Anger gives way to peace.', kind: 'Reflection', summary: 'Consider changes in thought and emotion, even while questioning the world outside the mind.' },
+  { id: 'denial', number: '03', title: 'Proof by contradiction', subtitle: 'What happens when we reach a conclusion?', kind: 'Reasoning', summary: 'Test the tension between a transition in thought and the claim that nothing ever changes.' },
 ] as const
 
 export const actualizerNeeds = [

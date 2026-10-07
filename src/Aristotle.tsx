@@ -17,10 +17,10 @@ function readAcceptance(): boolean {
 }
 
 function SourceNotes({ compact = false }: { compact?: boolean }) {
-  return <aside className={`source-notes ${compact ? 'compact' : ''}`} aria-label="Sources and editorial notes">
-    <p className="mini-label">Read the primary texts</p>
+  return <aside className={`source-notes ${compact ? 'compact' : ''}`} aria-label="References">
+    <p className="mini-label">Read more</p>
     <div>{Object.values(sources).map(source => <a href={source.url} key={source.title} target="_blank" rel="noreferrer"><span>{source.title} ↗</span><small>{source.detail}</small></a>)}</div>
-    <p>The examples and three routes of exploration adapt the <a href={premiseNotes} target="_blank" rel="noreferrer">Project Acutis notes of October 3, 2026 ↗</a>. They are modern illustrations, not Aristotle’s examples or quotations. The reflection on mental change and the denial argument are project reasoning, not passages from these texts.</p>
+    <p><a href={premiseNotes} target="_blank" rel="noreferrer">Project notes · Change is real ↗</a></p>
   </aside>
 }
 
@@ -44,53 +44,48 @@ function Disclosure({ id, title, open, onToggle, nested = false, children }: {
   </section>
 }
 
-function PotentialDefinition() {
-  return <div className="reading-prose">
-    <p>A potential is a real capacity in something to be otherwise or to perform an activity, under appropriate conditions. Hot coffee can become cooler; a person can come to understand an unfamiliar idea.</p>
-    <p>Calling something potential does not mean that anything whatsoever could happen to it. Nor does having a capacity guarantee that it will be realized.</p>
-  </div>
-}
-
-function ActualDefinition() {
-  return <>
-    <div className="reading-prose">
-      <p>An actual is a realized state or activity: what a thing is or does in reality. The coffee is actually hot now. If it becomes cool, being cool is then actual. This is what we mean by actuality.</p>
-      <p>The coffee does not have to become “real” for the first time: it was already real, with an unrealized capacity to be cooler.</p>
-    </div>
-    <div className="concept-equation"><div><small>Actually hot</small><strong>Can be cooler</strong></div><span aria-hidden="true">→</span><div><small>Changing</small><strong>Cooling</strong></div><span aria-hidden="true">→</span><div><small>Actually cooler</small><strong>Capacity realized</strong></div></div>
-    <Note level="h4" title="The process matters, too"><p>“A potential becoming actual” is our introductory shorthand. In <a href={sources.physics.url} target="_blank" rel="noreferrer">Physics III.1</a>, Aristotle defines motion through the actuality of what is potential, insofar as it is potential. Cooling is the unfolding process; the cooler state is its result. The definition is subtler than a jump between two still images.</p></Note>
-    <div className="reading-prose"><h4>In the same respect</h4><p>Coffee can be actually hot and potentially cool at the same moment. That does not say it is already both hot and cold in the same respect.</p><h4>Occurrence and explanation are different questions</h4><p>We can first recognize that the coffee changes, then ask whether potential and actuality provide the right account of that change. Someone may grant the occurrence while questioning this philosophical framework.</p></div>
-  </>
+function Definitions() {
+  return <section className="premise-definitions" aria-labelledby="exploration-title">
+    <h2 id="exploration-title">Definitions: potential and actuality</h2>
+    <dl className="definition-cards">
+      <div id="premise-potential" tabIndex={-1}>
+        <dt>Potential</dt>
+        <dd><p>A <strong>potential</strong> is a real capacity or possibility within something to become otherwise or to perform an activity, even though that capacity has not yet been realized.</p><p>For example, coffee has the potential to become cold, and a person has the potential to understand something they do not yet understand.</p></dd>
+      </div>
+      <div id="premise-actual" tabIndex={-1}>
+        <dt>Actuality</dt>
+        <dd><p>An <strong>actuality</strong> is the realized state or activity of a capacity.</p><p>When the coffee becomes cold, its potential to be cold has been actualized. When a person comes to understand something, the potential for that understanding has become actual.</p></dd>
+      </div>
+    </dl>
+    <p className="definition-summary">Change is therefore <strong>the actualization of a potential</strong>: something moves from what it can be or do to what it is or does in actuality.</p>
+  </section>
 }
 
 function ExperienceContent() {
   return <>
-    <p className="section-introduction">Set a hot cup of coffee on a table in a cooler room. Later, it is no longer hot. The same coffee has become different.</p>
+    <div className="reading-prose"><p>We directly experience change in everyday life.</p><p>For example, a cup of hot coffee left on a table becomes cold or reaches room temperature over time. At one moment, the coffee is hot; later, it is cold. The same thing has moved from one state to another, so change is encountered through our senses.</p><p>Actually, the coffee has several possible states it could undergo: it could be boiled and evaporated, frozen, spoiled, or consumed. Under the actual circumstances, however, one of these potentials is realized: the coffee cools.</p></div>
     <CoffeeExplorer />
-    <div className="reading-prose"><h5>What does this establish?</h5><p>We encounter a difference across time in a persisting thing: the coffee was hot, and is later cooler. If that observation is reliable, at least one real change has occurred. We do not need to show that everything changes to support this premise.</p><h5>What are we relying on?</h5><p>This route provisionally trusts ordinary perception and memory. Our senses sometimes mislead us, so one appearance need not settle a case. Repeated observation and measurement can strengthen the example, but they do not answer every radical doubt about the external world.</p></div>
-    <Note title="What if our senses mislead us?"><p>That is a reason to examine this route’s assumption. It need not end the exploration: the next route asks about a transition in experience itself, such as moving from anger to peace.</p></Note>
-    <div className="reading-prose"><h5>What has not been proved?</h5><p>The example illustrates change; it does not yet demonstrate that every change requires an actualizer, rule out a causal regress, or establish a divine cause. Those claims require their own explanations.</p></div>
+    <Note level="h4" title="A note on our senses"><p>This argument uses the provisional premise that our senses are generally reliable sources of knowledge: although the senses can sometimes mislead us, ordinary perception gives us reasonable access to changes occurring in the world around us.</p><p>This sensory premise does not need to carry the entire argument or be established first, because the reality of change can also be supported independently through inner experience—our changing thoughts and emotions—and through the proof by contradiction, which are explained as follows.</p></Note>
   </>
 }
 
 function MindContent() {
   return <>
-    <p className="section-introduction">Consider a moment when anger settled into peace, or an unfamiliar idea began to make sense.</p>
+    <div className="reading-prose"><p>Even if we doubt the external world and mainly our senses, the existence of the thinking mind remains undeniable in the Cartesian sense: if I am thinking, I exist as a thinker (or more commonly known as “I think, therefore I am”).</p><p>Within conscious experience, we encounter changing thoughts, judgments, and emotions.</p><p>We can recognize within our own minds that our emotions have changed—for example, that we have moved from happiness to sadness, from anxiety to calm, or from anger to peace.</p></div>
     <MindExplorer />
-    <div className="reading-prose"><h5>What changes within experience?</h5><p>A person who was angry may later feel peaceful. Someone who was confused may come to understand. If these are real transitions, then change occurs at least within conscious experience, whatever account we give of the mind.</p><h5>Does this depend on the coffee being real?</h5><p>The route does not begin by assuming that the world is exactly as it appears. Even if an external event is misperceived, there can still be a change in how it is experienced. The key claim is that experience itself undergoes a transition.</p></div>
-    <Note title="The scope of this argument"><p>Being aware now does not, on its own, prove that any earlier mental state existed. Recognizing a transition also involves awareness of succession or memory. A skeptic may challenge that recognition. The notes’ appeal to the thinking mind motivates this route; the existence of thought alone is not enough to establish change.</p></Note>
-    <div className="reading-prose"><h5>Keep the conclusion modest</h5><p>If an actual transition in thought or feeling is acknowledged, “no change occurs anywhere” cannot be true. This does not yet settle the nature of time, the relation of mind and body, or the cause of that transition.</p></div>
+    <div className="reading-prose"><p>We can also move from uncertainty to certainty, or from not understanding something to understanding it.</p><p>Our ability to recognize these emotional and intellectual transitions provides direct evidence that change is real.</p></div>
+    <p className="argument-takeaway">Therefore, we know change is real by our conscious experience, even if someone questions whether the external world is exactly as it appears (something like a Matrix objection).</p>
   </>
 }
 
 function DenialContent() {
   const [revealed, setRevealed] = useState(false)
   return <>
-    <p className="section-introduction">Change can be proven by contradiction. Suppose someone moves from uncertainty about change to certainty that no change ever occurs.</p>
-    <ol className="reasoning-sequence"><li><span>Suppose</span><h5>“I am unsure whether change is real.”</h5><p>The person begins in a state of uncertainty.</p></li><li><span>Then</span><h5>“I have concluded that change is unreal.”</h5><p>They reason toward a different judgment.</p></li><li><span>Notice</span><h5>Uncertainty has become certainty.</h5><p>If this transition actually occurred, it is itself a case of change.</p></li></ol>
-    <div className="thought-question"><h5>Can both claims be true?</h5><p>“My thought really changed” and “nothing ever changes.”</p><button className="secondary-button" aria-expanded={revealed} aria-controls="denial-reply" onClick={() => setRevealed(value => !value)}>{revealed ? 'Hide the reasoning −' : 'Examine the tension +'}</button>{revealed && <div id="denial-reply" className="reason-reveal"><p>No. A single real transition contradicts the universal denial. Granting the transition undercuts the denial.</p></div>}</div>
-    <Note title="A conditional challenge, not a shortcut"><p>A skeptic who also denies that reasoning involved any real transition has not conceded the starting point. This argument therefore does not refute every account of changeless reality or every view of time. It shows that acknowledging an actual transition while denying all change is inconsistent.</p></Note>
-    <div className="reading-prose"><h5>What can we take back?</h5><p>The modest result is that some change is real, if a transition in experience is granted. The next task is to ask what makes change possible. That is a further argument, not something established by the act of denying change.</p></div>
+    <p className="section-introduction">Change can still be proven by contradiction:</p>
+    <ol className="reasoning-sequence"><li><span>Suppose</span><h4>Uncertainty</h4><p>Suppose someone is initially uncertain whether change is real.</p></li><li><span>Then</span><h4>Certainty</h4><p>Through whatever reasoning they choose, such as conducting some scientific research, they eventually become certain that change is not real.</p></li><li><span>Notice</span><h4>A real transition</h4><p>But their mental state has changed from uncertainty to certainty. Their conclusion was reached through a real transition in thought.</p></li></ol>
+    <div className="reading-prose"><p>Therefore, the denial of change depends upon the very reality it attempts to reject.</p></div>
+    <div className="thought-question"><h4>Can we acknowledge a transition from uncertainty to certainty and deny change at the same time?</h4><button className="secondary-button" aria-expanded={revealed} aria-controls="denial-reply" onClick={() => setRevealed(value => !value)}>{revealed ? 'Hide the explanation −' : 'Show the explanation +'}</button><div id="denial-reply" className="reason-reveal" hidden={!revealed}><p>Someone cannot coherently move from uncertainty to certainty while denying that any change has occurred.</p></div></div>
+    <p className="argument-takeaway">This establishes that someone cannot coherently move from uncertainty to certainty while denying that any change has occurred. <strong>Therefore, change must be real.</strong></p>
   </>
 }
 
@@ -152,7 +147,6 @@ export function Aristotle({ hash, scrollPositions, focusPositions }: { hash: str
   const main = useRef<HTMLElement>(null)
   const exploration = useRef<HTMLElement>(null)
   const reducedMotion = useReducedMotion()
-  const [expanded, setExpanded] = useState<Record<string, boolean>>({})
   const isFirstPremise = hash === root || knownRoutes.includes(hash) && hash.startsWith(deeper)
   const valid = knownRoutes.includes(hash)
   const isPending = hash === '#aristotle/2' || hash === '#aristotle/conclusion'
@@ -160,7 +154,6 @@ export function Aristotle({ hash, scrollPositions, focusPositions }: { hash: str
   const legacySection = hash === deeper ? 'reasons' : hash === `${deeper}/potential` ? 'potential' : deepPoints.some(item => item.id === point) ? point : null
 
   useEffect(() => {
-    if (legacySection) setExpanded(current => ({ ...current, reasons: legacySection !== 'potential' || !!current.reasons, [legacySection]: true }))
     const frame = requestAnimationFrame(() => {
       if (legacySection) {
         const section = document.getElementById(`premise-${legacySection}`)
@@ -201,34 +194,29 @@ export function Aristotle({ hash, scrollPositions, focusPositions }: { hash: str
 
   return <main className={`aristotle-explorer${isFirstPremise || hash === '#aristotle/2' ? ' premise-landing' : ''}`} ref={main}>
     {!isFirstPremise && hash !== '#aristotle/2' && outline}
-    {!valid ? <section className="reading-page"><h1 id="aristotle-title" tabIndex={-1}>This page is not here yet.</h1><a className="primary-button" href={root}>Return to the first premise →</a></section> : hash === '#aristotle/2' ? <ActualizerPage outline={outline} /> : isPending ? <section className="reading-page" key={hash}><PendingPage conclusion /></section> : <section className="first-premise" key="first-premise">
+    {!valid ? <section className="reading-page"><h1 id="aristotle-title" tabIndex={-1}>This page is not here yet.</h1><a className="primary-button" href={root}>Return to the first premise →</a></section> : hash === '#aristotle/2' ? <ActualizerPage outline={outline} /> : isPending ? <section className="reading-page" key={hash}><PendingPage conclusion /></section> : <section className="first-premise notes-premise" key="first-premise">
       <div className="premise-intro premise-hero">
         <div className="premise-hero-copy">
           <p className="eyebrow">The Aristotelian proof · Premise one</p>
           <h1 id="aristotle-title" tabIndex={-1}>Change is <em>real.</em></h1>
-          <p className="change-definition">Change is the actualization of a potential.</p>
-          <div className="premise-hero-actions">
-            <button className="primary-button acceptance-button" onClick={() => accepted ? window.location.hash = '#aristotle/2' : setAcceptance(true)}>{accepted ? 'Continue' : 'I accept'} <span aria-hidden="true">{accepted ? '→' : '✓'}</span></button>
-            {accepted && <div className="acceptance-state"><span role="status">Accepted</span><button onClick={() => setAcceptance(false)} aria-label="Undo acceptance of this premise">Undo</button></div>}
-            {acceptanceStorageFailed && <small role="status">Remembered for this visit; browser storage is unavailable.</small>}
-          </div>
+          <p className="change-definition">Aristotle defined change as a potential becoming an actual.</p>
         </div>
-        <button className="premise-scroll" onClick={explorePremise} aria-controls="premise-exploration"><span>Go deeper</span><span aria-hidden="true">↓</span></button>
+        <button className="premise-scroll" onClick={explorePremise} aria-controls="premise-exploration"><span>Follow the argument</span><span aria-hidden="true">↓</span></button>
       </div>
       <section className="premise-exploration" id="premise-exploration" ref={exploration} tabIndex={-1} aria-labelledby="exploration-title">
-        <p className="eyebrow">Take a closer look</p><h2 id="exploration-title">Explore this premise.</h2>
-        <div className="premise-sections">
-          <p className="mini-label">Definitions</p>
-          <Disclosure id="potential" title="What is a potential?" open={!!expanded.potential} onToggle={() => setExpanded(current => ({ ...current, potential: !current.potential }))}><PotentialDefinition /></Disclosure>
-          <Disclosure id="actual" title="What is an actual?" open={!!expanded.actual} onToggle={() => setExpanded(current => ({ ...current, actual: !current.actual }))}><ActualDefinition /></Disclosure>
-          <Disclosure id="reasons" title="How we know this premise is true?" open={!!expanded.reasons} onToggle={() => setExpanded(current => ({ ...current, reasons: !current.reasons }))}>
-            <p className="section-introduction">Explore three ways of recognizing change. Choose any one to open its explanation.</p>
-            {deepPoints.map((item, index) => <Disclosure key={item.id} id={item.id} title={`${index + 1}. ${item.title}`} nested open={!!expanded[item.id]} onToggle={() => setExpanded(current => ({ ...current, [item.id]: !current[item.id] }))}>
-              {item.id === 'experience' ? <ExperienceContent /> : item.id === 'mind' ? <MindContent /> : <DenialContent />}
-            </Disclosure>)}
-            <p className="routes-note">These are supporting considerations, not three premises that must all be accepted together. The mental routes can be considered while doubting ordinary perception, but still depend on recognizing a real transition in experience. This establishes neither the cause of every change nor God's existence.</p>
-          </Disclosure>
+        <Definitions />
+        <div className="premise-reasons">
+          <h2 id="premise-reasons" tabIndex={-1}>Why we know change is real</h2>
+          {deepPoints.map((item, index) => <section className="argument-section" key={item.id} aria-labelledby={`premise-${item.id}`}>
+            <h3 id={`premise-${item.id}`} tabIndex={-1}><span className="argument-number" aria-hidden="true">{item.number}</span><span><span className="sr-only">{index + 1}. </span>{item.title}</span></h3>
+            {item.id === 'experience' ? <ExperienceContent /> : item.id === 'mind' ? <MindContent /> : <DenialContent />}
+          </section>)}
         </div>
+      <div className="premise-hero-actions premise-completion">
+        <button className="primary-button acceptance-button" onClick={() => accepted ? window.location.hash = '#aristotle/2' : setAcceptance(true)}>{accepted ? 'Continue' : 'I accept'} <span aria-hidden="true">{accepted ? '→' : '✓'}</span></button>
+        {accepted && <div className="acceptance-state"><span role="status">Accepted</span><button onClick={() => setAcceptance(false)} aria-label="Undo acceptance of this premise">Undo</button></div>}
+        {acceptanceStorageFailed && <small role="status">Remembered for this visit; browser storage is unavailable.</small>}
+      </div>
       <div className="understanding"><div><button className={`understanding-button ${understood ? 'is-understood' : ''}`} aria-pressed={understood} onClick={markUnderstanding}><span aria-hidden="true">{understood ? '✓' : '○'}</span> {understood ? 'Marked as understood' : 'I understand this premise'}</button><p>{storageFailed ? 'Remembered for this visit; browser storage is unavailable.' : 'Saved in this browser. This records understanding, not agreement.'}</p></div><a className="text-link" href="#aristotle/2">See what comes next <span aria-hidden="true">→</span><small>Actualizer premise · In progress</small></a></div>
       <SourceNotes />
       <div className="premise-outline">{outline}</div>
