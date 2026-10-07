@@ -160,9 +160,6 @@
 .premise-hero h1{font-size:clamp(64px,9.5vw,120px);line-height:1.05}
 .premise-hero .change-definition{font-size:clamp(16px,2vw,21px);line-height:1.7;color:#b8c9e2;margin-top:25px}
 .premise-hero-actions{display:flex;flex-direction:column;align-items:center;gap:13px;min-height:97px;margin-top:36px}
-.acceptance-button{min-width:155px;cursor:pointer}
-.acceptance-state{display:flex;align-items:center;gap:10px;font-size:11px;color:#a4c9b9;min-height:30px}
-.acceptance-state button{background:none;border:0;color:#aebfd8;text-decoration:underline;text-underline-offset:3px;font-size:10px;padding:8px;min-height:36px;cursor:pointer}
 .deeper-examples{margin:0 0 36px}
 .premise-hero-actions small{font-size:10px;line-height:1.7;color:#9bacc6}
 .premise-scroll{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);width:max-content;max-width:100%;display:flex;flex-direction:column;align-items:center;gap:8px;min-height:66px;padding:10px 18px;border:0;background:transparent;color:#c3d6f1;font-size:12px;cursor:pointer}

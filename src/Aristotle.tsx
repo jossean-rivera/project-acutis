@@ -5,15 +5,10 @@ import { actualizerNeeds, conclusionNeeds, deepPoints, premiseNotes, researchSou
 const root = '#aristotle/1'
 const deeper = `${root}/deeper`
 const storageKey = 'acutis.aristotle.understanding.v1'
-const acceptanceKey = 'acutis.aristotle.acceptance.v1'
 const knownRoutes = [root, deeper, `${deeper}/potential`, ...deepPoints.map(point => `${deeper}/${point.id}`), '#aristotle/2', '#aristotle/conclusion']
 
 function readUnderstanding(): boolean {
   try { return localStorage.getItem(storageKey) === 'true' } catch { return false }
-}
-
-function readAcceptance(): boolean {
-  try { return localStorage.getItem(acceptanceKey) === 'true' } catch { return false }
 }
 
 function SourceNotes({ compact = false }: { compact?: boolean }) {
@@ -143,8 +138,6 @@ function PendingPage({ conclusion }: { conclusion: boolean }) {
 export function Aristotle({ hash, scrollPositions, focusPositions }: { hash: string; scrollPositions: Record<string, number>; focusPositions: Record<string, { href: string; text: string }> }) {
   const [understood, setUnderstood] = useState(readUnderstanding)
   const [storageFailed, setStorageFailed] = useState(false)
-  const [accepted, setAccepted] = useState(readAcceptance)
-  const [acceptanceStorageFailed, setAcceptanceStorageFailed] = useState(false)
   const main = useRef<HTMLElement>(null)
   const exploration = useRef<HTMLElement>(null)
   const reducedMotion = useReducedMotion()
@@ -182,11 +175,6 @@ export function Aristotle({ hash, scrollPositions, focusPositions }: { hash: str
     exploration.current?.scrollIntoView({ behavior: reducedMotion ? 'instant' : 'smooth', block: 'start' })
   }
 
-  function setAcceptance(value: boolean) {
-    setAccepted(value)
-    try { localStorage.setItem(acceptanceKey, String(value)); setAcceptanceStorageFailed(false) } catch { setAcceptanceStorageFailed(true) }
-  }
-
   const outline = <>
     <div className="path-banner"><a href={root}>The Aristotelian proof</a><span className="badge in-progress">In progress</span><span className="path-note">First premise open · Further reasoning under development</span></div>
     <nav className="aristotle-path" aria-label="Argument outline, reading order only"><a href={root} aria-current={!isPending && valid ? 'step' : undefined}><span className="path-dot">1</span><span>Change is real<small>{understood ? 'Marked understood' : 'Explore the premise'}</small></span></a><span className="outline-gap" aria-hidden="true">···</span><a href="#aristotle/2" aria-current={hash === '#aristotle/2' ? 'step' : undefined}><span className="path-dot">2</span><span>An actualizer<small>In progress</small></span></a><span className="outline-gap" aria-hidden="true">···</span><a href="#aristotle/conclusion" aria-current={hash === '#aristotle/conclusion' ? 'step' : undefined}><span className="path-dot">?</span><span>Conclusion<small>Further premises needed</small></span></a></nav>
@@ -202,12 +190,10 @@ export function Aristotle({ hash, scrollPositions, focusPositions }: { hash: str
           <h1 id="aristotle-title" tabIndex={-1}>Change is <em>real.</em></h1>
           <p className="change-definition">Aristotle defined change as a potential becoming an actual.</p>
           <div className="premise-hero-actions">
-            <button className="primary-button acceptance-button" onClick={() => accepted ? window.location.hash = '#aristotle/2' : setAcceptance(true)}>{accepted ? 'Continue' : 'I agree'} <span aria-hidden="true">{accepted ? '→' : '✓'}</span></button>
-            {accepted && <div className="acceptance-state"><span role="status">Agreed</span><button onClick={() => setAcceptance(false)} aria-label="Undo agreement with this premise">Undo</button></div>}
-            {acceptanceStorageFailed && <small role="status">Remembered for this visit; browser storage is unavailable.</small>}
+            <button className="primary-button" onClick={() => { window.location.hash = '#aristotle/2' }}>Continue <span aria-hidden="true">→</span></button>
           </div>
         </div>
-        <button className="premise-scroll" onClick={explorePremise} aria-controls="premise-exploration"><span>Follow the dot to go deeper</span><span aria-hidden="true">↓</span></button>
+        <button className="premise-scroll" onClick={explorePremise} aria-controls="premise-exploration"><span>or go deeper</span><span aria-hidden="true">↓</span></button>
       </div>
       <section className="premise-exploration" id="premise-exploration" ref={exploration} tabIndex={-1} aria-labelledby="exploration-title">
         <Definitions />
