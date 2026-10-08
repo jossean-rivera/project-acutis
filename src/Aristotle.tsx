@@ -1,10 +1,12 @@
 import { useEffect, useRef, useState } from 'react'
 import { CoffeeExplorer, CoffeeIntroduction, MindExplorer, useReducedMotion } from './ChangeIllustrations'
 import { actualizerNeeds, conclusionNeeds, deepPoints, researchSources, sources } from './aristotle-content'
+import { PremiseScreen, SectionContinue } from './PremiseJourney'
 
 const root = '#aristotle/1'
 const deeper = `${root}/deeper`
-const knownRoutes = [root, deeper, `${deeper}/potential`, ...deepPoints.map(point => `${deeper}/${point.id}`), '#aristotle/2', '#aristotle/conclusion']
+const changeRoute = `${deeper}/change`
+const knownRoutes = [root, deeper, changeRoute, `${deeper}/potential`, ...deepPoints.map(point => `${deeper}/${point.id}`), '#aristotle/2', '#aristotle/conclusion']
 
 function SourceNotes({ compact = false }: { compact?: boolean }) {
   return <aside className={`source-notes ${compact ? 'compact' : ''}`} aria-label="References">
@@ -104,7 +106,7 @@ function ActualizerPage({ outline }: { outline: React.ReactNode }) {
     <div className="premise-intro premise-hero">
       <div className="premise-hero-copy">
         <p className="eyebrow">The Aristotelian proof · Premise two</p>
-        <h1 id="aristotle-title" tabIndex={-1}>Change requires<br />an <em>actualizer.</em></h1>
+        <h1 id="aristotle-title" tabIndex={-1}>Change requires<br />an <em>actual actualizer.</em></h1>
         <p className="change-definition">What brings a potential into actuality?</p>
         <div className="premise-hero-actions">
           <span className="badge in-progress">In progress</span>
@@ -135,7 +137,7 @@ function ActualizerPage({ outline }: { outline: React.ReactNode }) {
 function PendingPage({ conclusion }: { conclusion: boolean }) {
   const needs = conclusion ? conclusionNeeds : actualizerNeeds
   return <>
-    <div className="reading-intro pending-intro"><p className="eyebrow">The Aristotelian proof · {conclusion ? 'Conclusion' : 'Premise two'}</p><span className="badge in-progress">In progress · Explanation not yet available</span><h1 id="aristotle-title" tabIndex={-1}>{conclusion ? <>The conclusion<br />is <em>still ahead.</em></> : <>Change requires<br />an <em>actualizer.</em></>}</h1><p>{conclusion ? 'The path from change to God needs further premises and careful argument. This screen does not yet present a completed proof.' : 'This is the next claim in the project notes. Its explanation is not written yet, so it is a question to investigate here, not an established result.'}</p></div>
+    <div className="reading-intro pending-intro"><p className="eyebrow">The Aristotelian proof · {conclusion ? 'Conclusion' : 'Premise two'}</p><span className="badge in-progress">In progress · Explanation not yet available</span><h1 id="aristotle-title" tabIndex={-1}>{conclusion ? <>The conclusion<br />is <em>still ahead.</em></> : <>Change requires<br />an <em>actual actualizer.</em></>}</h1><p>{conclusion ? 'The path from change to God needs further premises and careful argument. This screen does not yet present a completed proof.' : 'This is the next claim in the project notes. Its explanation is not written yet, so it is a question to investigate here, not an established result.'}</p></div>
     <section className="content-needed" aria-labelledby="needed-title"><span className="mini-label">What this screen still needs</span><h2 id="needed-title">Before we continue the proof</h2><ol>{needs.map(need => <li key={need.title}><h3>{need.title}</h3><p>{need.text}</p></li>)}</ol></section>
     <aside className="source-notes"><p className="mini-label">Primary texts for the next research pass</p><p>These are starting points to assess, not citations that establish the unwritten explanations.</p><div>{researchSources.filter(source => conclusion || !source.title.includes('XII')).map(source => <a href={source.url} key={source.title} target="_blank" rel="noreferrer">{source.title} ↗</a>)}</div></aside>
     <div className="pending-actions"><a className="primary-button" href={root}>Return to “Change is real” <span aria-hidden="true">↩</span></a>{!conclusion && <a className="text-link" href="#aristotle/conclusion">See what the conclusion still needs →</a>}</div>
@@ -144,36 +146,27 @@ function PendingPage({ conclusion }: { conclusion: boolean }) {
 
 export function Aristotle({ hash, scrollPositions, focusPositions }: { hash: string; scrollPositions: Record<string, number>; focusPositions: Record<string, { href: string; text: string }> }) {
   const main = useRef<HTMLElement>(null)
-  const exploration = useRef<HTMLElement>(null)
-  const reducedMotion = useReducedMotion()
   const isFirstPremise = hash === root || knownRoutes.includes(hash) && hash.startsWith(deeper)
   const valid = knownRoutes.includes(hash)
   const isPending = hash === '#aristotle/2' || hash === '#aristotle/conclusion'
   const point = hash.slice(`${deeper}/`.length)
-  const legacySection = hash === deeper ? 'reasons' : hash === `${deeper}/potential` ? 'potential' : deepPoints.some(item => item.id === point) ? point : null
+  const screen = hash === root ? -1 : hash === changeRoute || hash === `${deeper}/potential` ? 0 : hash === deeper ? 1 : deepPoints.findIndex(item => item.id === point) + 1
+  const screenHeading = screen === 0 ? 'exploration-title' : screen === 1 ? 'premise-reasons' : `premise-${deepPoints[screen - 1]?.id}`
 
   useEffect(() => {
     const frame = requestAnimationFrame(() => {
-      if (legacySection) {
-        const section = document.getElementById(`premise-${legacySection}`)
-        section?.focus({ preventScroll: true })
-        section?.scrollIntoView({ behavior: 'instant', block: 'start' })
-        return
-      }
       const savedFocus = focusPositions[hash]
       const previousLink = savedFocus && Array.from(main.current?.querySelectorAll('a') ?? []).find(link => link.getAttribute('href') === savedFocus.href && link.textContent === savedFocus.text)
-      const destination = previousLink || main.current?.querySelector<HTMLHeadingElement>('h1')
+      const destination = previousLink || (isFirstPremise && screen >= 0 ? document.getElementById(screenHeading) : main.current?.querySelector<HTMLHeadingElement>('h1'))
       destination?.focus({ preventScroll: true })
       window.scrollTo({ top: scrollPositions[hash] ?? 0, behavior: 'instant' })
     })
     document.title = `${isPending ? hash.endsWith('conclusion') ? 'Conclusion · In progress' : 'Actualizer · In progress' : valid ? 'Change is real' : 'Page not found'} · Project Acutis`
     return () => { cancelAnimationFrame(frame); document.title = 'Project Acutis' }
-  }, [hash, legacySection, isPending, valid, scrollPositions, focusPositions])
+  }, [hash, screen, screenHeading, isFirstPremise, isPending, valid, scrollPositions, focusPositions])
 
   function explorePremise() {
-    const heading = exploration.current?.querySelector<HTMLHeadingElement>('#exploration-title')
-    heading?.focus({ preventScroll: true })
-    heading?.scrollIntoView({ behavior: reducedMotion ? 'instant' : 'smooth', block: 'start' })
+    window.location.hash = changeRoute
   }
 
   const outline = <>
@@ -185,33 +178,35 @@ export function Aristotle({ hash, scrollPositions, focusPositions }: { hash: str
   return <main className={`aristotle-explorer${isFirstPremise || hash === '#aristotle/2' ? ' premise-landing' : ''}`} ref={main}>
     {!isFirstPremise && hash !== '#aristotle/2' && outline}
     {!valid ? <section className="reading-page"><h1 id="aristotle-title" tabIndex={-1}>This page is not here yet.</h1><a className="primary-button" href={root}>Return to the first premise →</a></section> : hash === '#aristotle/2' ? <ActualizerPage outline={outline} /> : isPending ? <section className="reading-page" key={hash}><PendingPage conclusion /></section> : <section className="first-premise notes-premise" key="first-premise">
-      <div className="premise-intro premise-hero">
+      {screen === -1 ? <div className="premise-intro premise-hero">
         <div className="premise-hero-copy">
           <p className="eyebrow">The Aristotelian proof · Premise one</p>
           <h1 id="aristotle-title" tabIndex={-1}>Change is <em>real.</em></h1>
           <p className="change-definition">Hot coffee becomes cold. Anger becomes peace. What could be becomes what is.</p>
           <div className="premise-hero-actions">
             <div className="premise-hero-buttons">
-              <button className="primary-button" onClick={explorePremise} aria-controls="premise-exploration">Explore why <span aria-hidden="true">↓</span></button>
+              <button className="primary-button" onClick={explorePremise}>Explore why <span aria-hidden="true">↓</span></button>
               <a className="secondary-button" href="#aristotle/2" aria-describedby="next-premise-description">Next premise <span aria-hidden="true">→</span></a>
             </div>
-            <small id="next-premise-description">Next: Change requires an actualizer · In progress</small>
+            <small id="next-premise-description">Next: Change requires an actual actualizer · In progress</small>
           </div>
         </div>
-      </div>
-      <section className="premise-exploration" id="premise-exploration" ref={exploration} tabIndex={-1} aria-labelledby="exploration-title">
-        <Definitions />
-        <div className="premise-reasons">
-          <h2 id="premise-reasons" tabIndex={-1}>How do we know change is real?</h2>
-          {deepPoints.map((item, index) => <section className="argument-section" key={item.id} aria-labelledby={`premise-${item.id}`}>
+      </div> : <PremiseScreen key={hash} heading={screenHeading} step={screen} backHref={screen === 0 ? root : screen === 1 ? changeRoute : `${deeper}/${deepPoints[screen - 2].id}`}>
+        {screen === 0 ? <>
+          <Definitions />
+          <SectionContinue href={`${deeper}/experience`} title="How do we know change is real?" />
+        </> : <div className="premise-reasons">
+          {screen === 1 && <h2 id="premise-reasons" tabIndex={-1}>How do we know change is real?</h2>}
+          {deepPoints.map((item, index) => screen === index + 1 && <section className="argument-section" key={item.id} aria-labelledby={`premise-${item.id}`}>
             <h3 id={`premise-${item.id}`} tabIndex={-1}><span className="argument-number" aria-hidden="true">{item.number}</span><span><span className="sr-only">{index + 1}. </span>{item.title}</span></h3>
             {item.id === 'experience' ? <ExperienceContent /> : item.id === 'mind' ? <MindContent /> : <DenialContent />}
+            {index < deepPoints.length - 1 && <SectionContinue href={`${deeper}/${deepPoints[index + 1].id}`} title={deepPoints[index + 1].title} />}
           </section>)}
-        </div>
-      <div className="understanding"><a className="text-link" href="#aristotle/2">See what comes next <span aria-hidden="true">→</span><small>Actualizer premise · In progress</small></a></div>
+        </div>}
+      {screen === 3 && <><div className="understanding"><a className="text-link" href="#aristotle/2">See what comes next <span aria-hidden="true">→</span><small>Actualizer premise · In progress</small></a></div>
       <SourceNotes />
-      <div className="premise-outline">{outline}</div>
-      </section>
+      <div className="premise-outline">{outline}</div></>}
+      </PremiseScreen>}
     </section>}
     <footer className="aristotle-footer"><span>Understanding comes before agreement.</span><a href="#arguments">All arguments ↗</a></footer>
   </main>

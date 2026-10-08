@@ -81,7 +81,7 @@ export function CoffeeIntroduction() {
     </figcaption>
     <ol className="coffee-storyboard">
       {coffeeStages.map((stage, index) => <li key={stage.id} className={`coffee-stage ${stageIndex === index ? 'is-current' : ''}`} data-stage={stage.id} aria-current={stageIndex === index ? 'step' : undefined}>
-        <div className="coffee-stage-heading"><h4>{stage.label}</h4><span className="coffee-stage-current" aria-hidden="true">{stageIndex === index ? 'Current stage' : ''}</span></div>
+        <div className="coffee-stage-heading"><h4><button className="coffee-stage-select" aria-pressed={stageIndex === index} onClick={() => scrub(index === 0 ? 0 : index === 1 ? 50 : 100)}>{stage.label}</button></h4><span className="coffee-stage-current" aria-hidden="true">{stageIndex === index ? 'Current stage' : ''}</span></div>
         <svg className="coffee-stage-drawing" viewBox="0 0 200 150" aria-hidden="true" focusable="false">
           <Mug x={96} y={87} steam={stage.id === 'during' ? 1 - progress / 100 : stage.steam} variant={stage.id === 'after' ? 'cool' : 'hot'} />
         </svg>
