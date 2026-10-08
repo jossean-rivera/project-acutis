@@ -1,5 +1,3 @@
-export const premiseNotes = 'https://www.notion.so/3ee1393f430a8062b361e1a3c59a4fd2'
-
 export const sources = {
   physics: { title: 'Aristotle · Physics III.1', detail: '201a10–201b15 · Motion, potentiality, and the process of actualization. Trans. R. P. Hardie & R. K. Gaye.', url: 'https://classics.mit.edu/Aristotle/physics.3.iii.html' },
   metaphysics: { title: 'Aristotle · Metaphysics IX.6', detail: '1048a25–1048b9 · Actuality and potentiality explained through examples. Trans. W. D. Ross.', url: 'https://classics.mit.edu/Aristotle/metaphysics.9.ix.html' },

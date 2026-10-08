@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
-import { CoffeeExplorer, MindExplorer, useReducedMotion } from './ChangeIllustrations'
-import { actualizerNeeds, conclusionNeeds, deepPoints, premiseNotes, researchSources, sources } from './aristotle-content'
+import { CoffeeExplorer, CoffeeIntroduction, MindExplorer, useReducedMotion } from './ChangeIllustrations'
+import { actualizerNeeds, conclusionNeeds, deepPoints, researchSources, sources } from './aristotle-content'
 
 const root = '#aristotle/1'
 const deeper = `${root}/deeper`
@@ -10,7 +10,6 @@ function SourceNotes({ compact = false }: { compact?: boolean }) {
   return <aside className={`source-notes ${compact ? 'compact' : ''}`} aria-label="References">
     <p className="mini-label">Read more</p>
     <div>{Object.values(sources).map(source => <a href={source.url} key={source.title} target="_blank" rel="noreferrer"><span>{source.title} ↗</span><small>{source.detail}</small></a>)}</div>
-    <p><a href={premiseNotes} target="_blank" rel="noreferrer">Project notes · Change is real ↗</a></p>
   </aside>
 }
 
@@ -36,18 +35,25 @@ function Disclosure({ id, title, open, onToggle, nested = false, children }: {
 
 function Definitions() {
   return <section className="premise-definitions" aria-labelledby="exploration-title">
-    <h2 id="exploration-title">Definitions: potential and actuality</h2>
+    <h2 id="exploration-title" tabIndex={-1}>What is change?</h2>
+    <p className="section-introduction coffee-orientation">Consider a cup of hot coffee left on a table. At first, it is hot. As time passes, it cools until it reaches room temperature. Let’s follow the same coffee through that change.</p>
+    <CoffeeIntroduction />
+    <p className="coffee-clarification">Here, “cold” means cooled to room temperature. The illustration speeds up time.</p>
+    <div className="reading-prose coffee-explanation">
+      <p>Before cooling, the coffee already exists and is hot: being hot is its <strong>actual</strong> state. It is not cold yet, but it can become cold. That capacity is a <strong>potential</strong> of the coffee, not a separate object.</p>
+      <p>As the coffee cools, its potential to be cold becomes actual. Afterward, being cold is its actual state: the potential has been <strong>actualized</strong>. The same coffee has gone from being hot to being cold.</p>
+    </div>
     <dl className="definition-cards">
       <div id="premise-potential" tabIndex={-1}>
         <dt>Potential</dt>
-        <dd><p>A <strong>potential</strong> is a real capacity or possibility within something to become otherwise or to perform an activity, even though that capacity has not yet been realized.</p><p>For example, coffee has the potential to become cold, and a person has the potential to understand something they do not yet understand.</p></dd>
+        <dd><p>What something can be.</p><p className="definition-example">Can become cold</p></dd>
       </div>
       <div id="premise-actual" tabIndex={-1}>
-        <dt>Actuality</dt>
-        <dd><p>An <strong>actuality</strong> is the realized state or activity of a capacity.</p><p>When the coffee becomes cold, its potential to be cold has been actualized. When a person comes to understand something, the potential for that understanding has become actual.</p></dd>
+        <dt>Actual</dt>
+        <dd><p>What something is.</p><p className="definition-example">Hot before; cold afterward</p></dd>
       </div>
     </dl>
-    <p className="definition-summary">Change is therefore <strong>the actualization of a potential</strong>: something moves from what it can be or do to what it is or does in actuality.</p>
+    <p className="definition-summary">Change is <strong>the actualization of a potential</strong>: a potential becoming actual.</p>
   </section>
 }
 
@@ -55,7 +61,13 @@ function ExperienceContent() {
   return <>
     <div className="reading-prose"><p>We directly experience change in everyday life.</p><p>For example, a cup of hot coffee left on a table becomes cold or reaches room temperature over time. At one moment, the coffee is hot; later, it is cold. The same thing has moved from one state to another, so change is encountered through our senses.</p><p>Actually, the coffee has several possible states it could undergo: it could be boiled and evaporated, frozen, spoiled, or consumed. Under the actual circumstances, however, one of these potentials is realized: the coffee cools.</p></div>
     <CoffeeExplorer />
-    <Note level="h4" title="A note on our senses"><p>This argument uses the provisional premise that our senses are generally reliable sources of knowledge: although the senses can sometimes mislead us, ordinary perception gives us reasonable access to changes occurring in the world around us.</p><p>This sensory premise does not need to carry the entire argument or be established first, because the reality of change can also be supported independently through inner experience—our changing thoughts and emotions—and through the proof by contradiction, which are explained as follows.</p></Note>
+    <Note level="h4" title="A note on our senses">
+      <p>This example assumes our senses are generally reliable. We do not need to prove that assumption before considering the next two points: inner experience and the argument from denying change.</p>
+      <details className="sensory-note-details">
+        <summary>More about this assumption</summary>
+        <div><p>This argument uses the provisional premise that our senses are generally reliable sources of knowledge: although the senses can sometimes mislead us, ordinary perception gives us reasonable access to changes occurring in the world around us.</p><p>This sensory premise does not need to carry the entire argument or be established first, because the reality of change can also be supported independently through inner experience—our changing thoughts and emotions—and through the proof by contradiction, which are explained as follows.</p></div>
+      </details>
+    </Note>
   </>
 }
 
@@ -74,7 +86,7 @@ function DenialContent() {
     <p className="section-introduction">Change can still be proven by contradiction:</p>
     <ol className="reasoning-sequence"><li><span>Suppose</span><h4>Uncertainty</h4><p>Suppose someone is initially uncertain whether change is real.</p></li><li><span>Then</span><h4>Certainty</h4><p>Through whatever reasoning they choose, such as conducting some scientific research, they eventually become certain that change is not real.</p></li><li><span>Notice</span><h4>A real transition</h4><p>But their mental state has changed from uncertainty to certainty. Their conclusion was reached through a real transition in thought.</p></li></ol>
     <div className="reading-prose"><p>Therefore, the denial of change depends upon the very reality it attempts to reject.</p></div>
-    <div className="thought-question"><h4>Can we acknowledge a transition from uncertainty to certainty and deny change at the same time?</h4><button className="secondary-button" aria-expanded={revealed} aria-controls="denial-reply" onClick={() => setRevealed(value => !value)}>{revealed ? 'Hide the explanation −' : 'Show the explanation +'}</button><div id="denial-reply" className="reason-reveal" hidden={!revealed}><p>Someone cannot coherently move from uncertainty to certainty while denying that any change has occurred.</p></div></div>
+    <div className="thought-question"><h4>Can we acknowledge a transition from uncertainty to certainty and deny change at the same time?</h4><button className="secondary-button" aria-expanded={revealed} aria-controls="denial-reply" onClick={() => setRevealed(value => !value)}>{revealed ? 'Hide the explanation −' : 'Show the explanation +'}</button><div id="denial-reply" className="reason-reveal" hidden={!revealed}><p>No. Before thinking it through, you were unsure whether change exists. Now you are convinced that nothing changes. Being unsure and being convinced are different states of mind. If you acknowledge that you moved from one to the other, you acknowledge a change in your own thinking—even if your conclusion denies change.</p></div></div>
     <p className="argument-takeaway">This establishes that someone cannot coherently move from uncertainty to certainty while denying that any change has occurred.</p>
     <p className="argument-conclusion">Therefore, change must be real.</p>
   </>
@@ -159,8 +171,9 @@ export function Aristotle({ hash, scrollPositions, focusPositions }: { hash: str
   }, [hash, legacySection, isPending, valid, scrollPositions, focusPositions])
 
   function explorePremise() {
-    exploration.current?.focus({ preventScroll: true })
-    exploration.current?.scrollIntoView({ behavior: reducedMotion ? 'instant' : 'smooth', block: 'start' })
+    const heading = exploration.current?.querySelector<HTMLHeadingElement>('#exploration-title')
+    heading?.focus({ preventScroll: true })
+    heading?.scrollIntoView({ behavior: reducedMotion ? 'instant' : 'smooth', block: 'start' })
   }
 
   const outline = <>
@@ -176,12 +189,15 @@ export function Aristotle({ hash, scrollPositions, focusPositions }: { hash: str
         <div className="premise-hero-copy">
           <p className="eyebrow">The Aristotelian proof · Premise one</p>
           <h1 id="aristotle-title" tabIndex={-1}>Change is <em>real.</em></h1>
-          <p className="change-definition">Aristotle defined change as a potential becoming an actual.</p>
+          <p className="change-definition">Hot coffee becomes cold. Anger becomes peace. What could be becomes what is.</p>
           <div className="premise-hero-actions">
-            <button className="primary-button" onClick={() => { window.location.hash = '#aristotle/2' }}>Continue <span aria-hidden="true">→</span></button>
+            <div className="premise-hero-buttons">
+              <button className="primary-button" onClick={explorePremise} aria-controls="premise-exploration">Explore why <span aria-hidden="true">↓</span></button>
+              <a className="secondary-button" href="#aristotle/2" aria-describedby="next-premise-description">Next premise <span aria-hidden="true">→</span></a>
+            </div>
+            <small id="next-premise-description">Next: Change requires an actualizer · In progress</small>
           </div>
         </div>
-        <button className="premise-scroll" onClick={explorePremise} aria-controls="premise-exploration"><span>or go deeper</span><span aria-hidden="true">↓</span></button>
       </div>
       <section className="premise-exploration" id="premise-exploration" ref={exploration} tabIndex={-1} aria-labelledby="exploration-title">
         <Definitions />

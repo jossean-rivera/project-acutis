@@ -13,26 +13,30 @@ export function useReducedMotion() {
 
 // Keep the reader's example position when following a deeper route and returning.
 // Playback itself always stops when its illustration leaves the page.
-const examplePositions = { coffee: 0, mind: 0 }
+const examplePositions = { introduction: 0, coffee: 0, mind: 0 }
 
-function useIllustration(example: keyof typeof examplePositions) {
+function useIllustration(example: keyof typeof examplePositions, reducedBehavior: 'complete' | 'pause' = 'complete') {
   const [progress, setProgress] = useState(() => examplePositions[example])
   const [playing, setPlaying] = useState(false)
   const reduced = useReducedMotion()
   useEffect(() => { examplePositions[example] = progress }, [example, progress])
   useEffect(() => {
     if (!playing) return
-    if (reduced) { setProgress(100); setPlaying(false); return }
+    if (reduced) {
+      if (reducedBehavior === 'complete') setProgress(100)
+      setPlaying(false)
+      return
+    }
     let frame: number
     let last = 0
     const animate = (time: number) => {
-      if (last) setProgress(value => Math.min(100, value + Math.min(time - last, 100) / 45))
+      if (last) setProgress(value => Math.min(100, value + Math.min(time - last, 100) / 30))
       last = time
       frame = requestAnimationFrame(animate)
     }
     frame = requestAnimationFrame(animate)
     return () => cancelAnimationFrame(frame)
-  }, [playing, reduced])
+  }, [playing, reduced, reducedBehavior])
   useEffect(() => { if (progress >= 100) setPlaying(false) }, [progress])
   const toggle = () => {
     if (playing) { setPlaying(false); return }
@@ -55,6 +59,41 @@ function Mug({ x, y, scale = 1, variant = 'hot', steam = 1 }: { x: number; y: nu
       {variant === 'boiling' && <g><circle cx="-16" cy="0" r="3" /><circle cx="5" cy="9" r="4" /><circle cx="14" cy="-3" r="2" /></g>}
     </g>
   </g>
+}
+
+const coffeeStages = [
+  { id: 'before', label: 'Before', caption: 'The coffee is hot now, but it can become cold.', steam: 1 },
+  { id: 'during', label: 'During', caption: 'The coffee is cooling.', steam: .35 },
+  { id: 'after', label: 'After', caption: 'The coffee is cold now. Its potential to be cold has become actual.', steam: 0 },
+] as const
+
+export function CoffeeIntroduction() {
+  const { progress, playing, reduced, toggle, scrub } = useIllustration('introduction', 'pause')
+  const id = useId()
+  const stageIndex = progress >= 100 ? 2 : progress > 0 ? 1 : 0
+  const currentStage = coffeeStages[stageIndex]
+  const advanceStage = () => scrub(stageIndex === 2 ? 0 : stageIndex === 1 ? 100 : 50)
+  const playbackLabel = playing ? 'Pause' : progress >= 100 ? 'Replay' : progress > 0 ? 'Resume' : 'Play'
+
+  return <figure className={`change-lab coffee-introduction ${playing ? 'is-playing' : ''}`} aria-labelledby={`${id}-title`}>
+    <figcaption className="lab-heading coffee-introduction-heading">
+      <div><span className="mini-label">A familiar change</span><h3 id={`${id}-title`}>The same coffee at different times.</h3></div>
+    </figcaption>
+    <ol className="coffee-storyboard">
+      {coffeeStages.map((stage, index) => <li key={stage.id} className={`coffee-stage ${stageIndex === index ? 'is-current' : ''}`} data-stage={stage.id} aria-current={stageIndex === index ? 'step' : undefined}>
+        <div className="coffee-stage-heading"><h4>{stage.label}</h4><span className="coffee-stage-current" aria-hidden="true">{stageIndex === index ? 'Current stage' : ''}</span></div>
+        <svg className="coffee-stage-drawing" viewBox="0 0 200 150" aria-hidden="true" focusable="false">
+          <Mug x={96} y={87} steam={stage.id === 'during' ? 1 - progress / 100 : stage.steam} variant={stage.id === 'after' ? 'cool' : 'hot'} />
+        </svg>
+        <p className="coffee-stage-caption">{stage.caption}</p>
+      </li>)}
+    </ol>
+    <div className="animation-controls">
+      <button type="button" className="play-button" onClick={reduced ? advanceStage : toggle}>{reduced ? stageIndex === 2 ? 'Reset example' : 'Next stage' : playbackLabel}</button>
+      <label className="time-slider">Hot <input aria-label="Introductory coffee cooling progress" aria-valuetext={`${currentStage.label}: ${currentStage.caption}`} type="range" min="0" max="100" step="1" value={progress} onChange={event => scrub(Number(event.target.value))} /> Cold</label>
+    </div>
+    <p className="lab-status" role="status" aria-atomic="true">Current stage: {currentStage.label}.</p>
+  </figure>
 }
 
 const possibilities = [
